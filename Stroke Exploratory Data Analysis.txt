@@ -1,0 +1,333 @@
+
+  Stroke Exploratory Data Analysis
+
+
+        David Kim
+
+|healthcare_dataset_stroke_data <- read.csv("healthcare-dataset-stroke-data.csv")|
+
+
+    Cleaning the data
+
+
+  Checking for missing values
+
+|colSums(is.na(healthcare_dataset_stroke_data))|
+
+|##                id            gender               age      hypertension 
+##                 0                 0                 0                 0 
+##     heart_disease      ever_married         work_type    Residence_type 
+##                 0                 0                 0                 0 
+## avg_glucose_level               bmi    smoking_status            stroke 
+##                 0                 0                 0                 0|
+
+There appears to be missing values with the bmi variable.
+
+#Cleaning the bmi variable
+
+|str(healthcare_dataset_stroke_data$bmi)|
+
+|##  chr [1:5110] "36.6" "N/A" "32.5" "34.4" "24" "29" "27.4" "22.8" "N/A" ...|
+
+|table(healthcare_dataset_stroke_data$bmi, useNA = "ifany")|
+
+|## 
+## 10.3 11.3 11.5   12 12.3 12.8   13 13.2 13.3 13.4 13.5 13.7 13.8 13.9   14 14.1 
+##    1    1    1    1    1    1    1    1    1    1    1    2    2    1    1    5 
+## 14.2 14.3 14.4 14.5 14.6 14.8 14.9   15 15.1 15.2 15.3 15.4 15.5 15.6 15.7 15.8 
+##    4    3    2    2    4    4    1    2    8    4    4    3    5    3    3    5 
+## 15.9   16 16.1 16.2 16.3 16.4 16.5 16.6 16.7 16.8 16.9   17 17.1 17.2 17.3 17.4 
+##    5    8    8   10   10   11    4    8   11    7    7   10   12   11    9   13 
+## 17.5 17.6 17.7 17.8 17.9   18 18.1 18.2 18.3 18.4 18.5 18.6 18.7 18.8 18.9   19 
+##    7   16   13    7    7   16   12    9   17   10   12   19   13   15    8    7 
+## 19.1 19.2 19.3 19.4 19.5 19.6 19.7 19.8 19.9   20 20.1 20.2 20.3 20.4 20.5 20.6 
+##   11   13    9   14   21    7    8   17    9   17   25   16   17   23   18   15 
+## 20.7 20.8 20.9   21 21.1 21.2 21.3 21.4 21.5 21.6 21.7 21.8 21.9   22 22.1 22.2 
+##   12   17   13   17   16   16   21   22   27   16   14   18   14   15   22   30 
+## 22.3 22.4 22.5 22.6 22.7 22.8 22.9   23 23.1 23.2 23.3 23.4 23.5 23.6 23.7 23.8 
+##   18   22   13   18   25   25   16   27   21   20   19   36   31   24   16   22 
+## 23.9   24 24.1 24.2 24.3 24.4 24.5 24.6 24.7 24.8 24.9   25 25.1 25.2 25.3 25.4 
+##   24   28   28   29   26   23   26   22   22   31   27   27   34   18   28   26 
+## 25.5 25.6 25.7 25.8 25.9   26 26.1 26.2 26.3 26.4 26.5 26.6 26.7 26.8 26.9   27 
+##   33   21   15   24   24   25   37   27   23   34   30   29   37   21   34   35 
+## 27.1 27.2 27.3 27.4 27.5 27.6 27.7 27.8 27.9   28 28.1 28.2 28.3 28.4 28.5 28.6 
+##   28   24   36   22   29   37   37   23   28   28   29   25   30   38   27   27 
+## 28.7 28.8 28.9   29 29.1 29.2 29.3 29.4 29.5 29.6 29.7 29.8 29.9   30 30.1 30.2 
+##   41   26   31   26   29   26   22   30   26   26   27   23   26   27   26   20 
+## 30.3 30.4 30.5 30.6 30.7 30.8 30.9   31 31.1 31.2 31.3 31.4 31.5 31.6 31.7 31.8 
+##   30   17   24   18   23   21   27   22   26   19   21   30   27   21   14   24 
+## 31.9   32 32.1 32.2 32.3 32.4 32.5 32.6 32.7 32.8 32.9   33 33.1 33.2 33.3 33.4 
+##   22   21   24   20   28   19   21   19   21   25   13   15   25   17   15   16 
+## 33.5 33.6 33.7 33.8 33.9   34 34.1 34.2 34.3 34.4 34.5 34.6 34.7 34.8 34.9   35 
+##   23   11   19   13   13   17   15   17   18   18   21   11   20   15   11   12 
+## 35.1 35.2 35.3 35.4 35.5 35.6 35.7 35.8 35.9   36 36.1 36.2 36.3 36.4 36.5 36.6 
+##   10   16   12    9   13   15   13   24   18   11    7   12   13   10    4   14 
+## 36.7 36.8 36.9   37 37.1 37.2 37.3 37.4 37.5 37.6 37.7 37.8 37.9   38 38.1 38.2 
+##   15    8   13   10    7    9   13   11    9    9    7   10   11   13   10    9 
+## 38.3 38.4 38.5 38.6 38.7 38.8 38.9   39 39.1 39.2 39.3 39.4 39.5 39.6 39.7 39.8 
+##    2    6    7    9   11   10    8    7    8   10    6   10    8    9    8    5 
+## 39.9   40 40.1 40.2 40.3 40.4 40.5 40.6 40.7 40.8 40.9   41 41.1 41.2 41.3 41.4 
+##    5    6   10   10    8    9    7    1    1    7    6    3    7    8    6    3 
+## 41.5 41.6 41.7 41.8 41.9   42 42.1 42.2 42.3 42.4 42.5 42.6 42.7 42.8 42.9   43 
+##    8    5    7   11    5    3    3    8    5    5    2    4    4    3    3    8 
+## 43.1 43.2 43.3 43.4 43.6 43.7 43.8 43.9   44 44.1 44.2 44.3 44.4 44.5 44.6 44.7 
+##    4    4    5    6    4    7    9    8    4    1    4    3    1    4    2    6 
+## 44.8 44.9   45 45.1 45.2 45.3 45.4 45.5 45.7 45.8 45.9   46 46.1 46.2 46.3 46.4 
+##    4    2    5    2    3    4    4    4    2    1    2    4    2    2    1    1 
+## 46.5 46.6 46.8 46.9 47.1 47.3 47.4 47.5 47.6 47.8 47.9   48 48.1 48.2 48.3 48.4 
+##    2    1    1    2    1    2    1    3    3    2    1    1    1    1    2    1 
+## 48.5 48.7 48.8 48.9 49.2 49.3 49.4 49.5 49.8 49.9 50.1 50.2 50.3 50.4 50.5 50.6 
+##    2    1    2    3    1    3    1    2    3    1    2    4    2    1    1    2 
+## 50.8 50.9   51 51.5 51.7 51.8 51.9 52.3 52.5 52.7 52.8 52.9 53.4 53.5 53.8 53.9 
+##    1    1    1    1    1    1    2    1    1    2    3    1    2    1    2    1 
+##   54 54.1 54.2 54.3 54.6 54.7 54.8   55 55.1 55.2 55.7 55.9   56 56.1 56.6 57.2 
+##    1    1    1    1    2    3    1    2    1    1    4    2    1    1    2    2 
+## 57.3 57.5 57.7 57.9 58.1 59.7 60.2 60.9 61.2 61.6 63.3 64.4 64.8 66.8 71.9   78 
+##    1    1    1    1    1    1    1    2    1    1    1    1    1    1    1    1 
+##   92 97.6  N/A 
+##    1    1  201|
+
+This shows us the structure of the bmi variable and how many N/A values
+there are.
+
+|healthcare_dataset_stroke_data$bmi <- as.numeric(healthcare_dataset_stroke_data$bmi)|
+
+|## Warning: NAs introduced by coercion|
+
+This function converts blank or non numeric values into NA, which R can read
+
+|sum(is.na(healthcare_dataset_stroke_data$bmi)) #gives us the number of missing values        |
+
+|## [1] 201|
+
+|mean(is.na(healthcare_dataset_stroke_data$bmi)) * 100 #gives us the percentage of missing values|
+
+|## [1] 3.933464|
+
+There are 201 missing values, and these make up 3.933464 percent of the
+values corresponding to the bmi variable.
+
+Since our missingness is small (<10%) with the bmi variable, we will be
+able to remove rows that have missing bmi values.
+
+|healthcare_dataset_stroke_data <- healthcare_dataset_stroke_data[!is.na(healthcare_dataset_stroke_data$bmi), ]|
+
+This function has removed rows with NA bmi values, and we can confirm by
+running our missingness functions again.
+
+|sum(is.na(healthcare_dataset_stroke_data$bmi)) #gives us the number of missing values        |
+
+|## [1] 0|
+
+|mean(is.na(healthcare_dataset_stroke_data$bmi)) * 100 #gives us the percentage of missing values|
+
+|## [1] 0|
+
+Values of 0 mean there are no more missing values in the bmi variable.
+
+
+  Removing duplicates from the data set
+
+|healthcare_dataset_stroke_data <- healthcare_dataset_stroke_data[!duplicated(healthcare_dataset_stroke_data), ]|
+
+Any duplicated variables have now been removed from the data set.
+
+#Obtain summaries of the data set
+
+|head(healthcare_dataset_stroke_data)          |
+
+|##      id gender age hypertension heart_disease ever_married     work_type
+## 1  9046   Male  67            0             1          Yes       Private
+## 3 31112   Male  80            0             1          Yes       Private
+## 4 60182 Female  49            0             0          Yes       Private
+## 5  1665 Female  79            1             0          Yes Self-employed
+## 6 56669   Male  81            0             0          Yes       Private
+## 7 53882   Male  74            1             1          Yes       Private
+##   Residence_type avg_glucose_level  bmi  smoking_status stroke
+## 1          Urban            228.69 36.6 formerly smoked      1
+## 3          Rural            105.92 32.5    never smoked      1
+## 4          Urban            171.23 34.4          smokes      1
+## 5          Rural            174.12 24.0    never smoked      1
+## 6          Urban            186.21 29.0 formerly smoked      1
+## 7          Rural             70.09 27.4    never smoked      1|
+
+|str(healthcare_dataset_stroke_data)           |
+
+|## 'data.frame':    4909 obs. of  12 variables:
+##  $ id               : int  9046 31112 60182 1665 56669 53882 10434 60491 12109 12095 ...
+##  $ gender           : chr  "Male" "Male" "Female" "Female" ...
+##  $ age              : num  67 80 49 79 81 74 69 78 81 61 ...
+##  $ hypertension     : int  0 0 0 1 0 1 0 0 1 0 ...
+##  $ heart_disease    : int  1 1 0 0 0 1 0 0 0 1 ...
+##  $ ever_married     : chr  "Yes" "Yes" "Yes" "Yes" ...
+##  $ work_type        : chr  "Private" "Private" "Private" "Self-employed" ...
+##  $ Residence_type   : chr  "Urban" "Rural" "Urban" "Rural" ...
+##  $ avg_glucose_level: num  229 106 171 174 186 ...
+##  $ bmi              : num  36.6 32.5 34.4 24 29 27.4 22.8 24.2 29.7 36.8 ...
+##  $ smoking_status   : chr  "formerly smoked" "never smoked" "smokes" "never smoked" ...
+##  $ stroke           : int  1 1 1 1 1 1 1 1 1 1 ...|
+
+|summary(healthcare_dataset_stroke_data) |
+
+|##        id           gender               age         hypertension    
+##  Min.   :   77   Length:4909        Min.   : 0.08   Min.   :0.00000  
+##  1st Qu.:18605   Class :character   1st Qu.:25.00   1st Qu.:0.00000  
+##  Median :37608   Mode  :character   Median :44.00   Median :0.00000  
+##  Mean   :37064                      Mean   :42.87   Mean   :0.09187  
+##  3rd Qu.:55220                      3rd Qu.:60.00   3rd Qu.:0.00000  
+##  Max.   :72940                      Max.   :82.00   Max.   :1.00000  
+##  heart_disease    ever_married        work_type         Residence_type    
+##  Min.   :0.0000   Length:4909        Length:4909        Length:4909       
+##  1st Qu.:0.0000   Class :character   Class :character   Class :character  
+##  Median :0.0000   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :0.0495                                                           
+##  3rd Qu.:0.0000                                                           
+##  Max.   :1.0000                                                           
+##  avg_glucose_level      bmi        smoking_status         stroke       
+##  Min.   : 55.12    Min.   :10.30   Length:4909        Min.   :0.00000  
+##  1st Qu.: 77.07    1st Qu.:23.50   Class :character   1st Qu.:0.00000  
+##  Median : 91.68    Median :28.10   Mode  :character   Median :0.00000  
+##  Mean   :105.31    Mean   :28.89                      Mean   :0.04257  
+##  3rd Qu.:113.57    3rd Qu.:33.10                      3rd Qu.:0.00000  
+##  Max.   :271.74    Max.   :97.60                      Max.   :1.00000|
+
+#Variable Parameters id: Numeric, ranges from 67 - 72,940 gender:
+Categorical, Male or Female values age: Numeric, ranges from 0.08 - 82,
+mean = 43.2 hypertension: Numeric Binary, 0 or 1 values, 0 = No and 1 =
+Yes, Prevalence = 9.7% heart_disease: Numeric Binary, 0 or 1 values, 0 =
+No and 1 = Yes, Prevalence = 5.4% ever_married: Categorical, Yes or No
+categorical values work_type: Categorical, Private, Self-employed, or
+Govt_job values Residence_type: Categorical, Urban or Rural values
+avg_glucose_level: Numeric, ranges from 55.1 - 271.7, mean = 106.1 bmi:
+smoking_status: Categorical, formerly smoked, never smoked, smokes
+values stroke: Numeric Binary, 0 or 1 values, 0 = No and 1 = Yes,
+Prevalence = 4.9%
+
+#Testing what demographic variables are significantly related to having
+a stroke First we have to attach the data set to make it easier on
+ourselves and also assume our alpha = 0.05.
+
+|attach(healthcare_dataset_stroke_data)|
+
+Comparing gender and stroke using a t test - results are not significant
+
+|t.test(table(gender, stroke))|
+
+|## 
+##  One Sample t-test
+## 
+## data:  table(gender, stroke)
+## t = 1.646, df = 5, p-value = 0.1607
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -459.5405 2095.8738
+## sample estimates:
+## mean of x 
+##  818.1667|
+
+Comparing age and stroke using a correlation test - variables are
+positively but weakly correlated.
+
+|cor(age, stroke)|
+
+|## [1] 0.2323309|
+
+Comparing hypertension and stroke using a chi-squared test - results are
+significant
+
+|chisq.test(table(hypertension, stroke))|
+
+|## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  table(hypertension, stroke)
+## X-squared = 97.275, df = 1, p-value < 2.2e-16|
+
+Comparing heart_disease and stroke using a chi-squared test - results
+are significant
+
+|chisq.test(table(heart_disease, stroke))|
+
+|## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  table(heart_disease, stroke)
+## X-squared = 90.28, df = 1, p-value < 2.2e-16|
+
+Comparing heart_disease and stroke using a chi-squared test - results
+are significant
+
+|chisq.test(table(heart_disease, stroke))|
+
+|## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  table(heart_disease, stroke)
+## X-squared = 90.28, df = 1, p-value < 2.2e-16|
+
+Comparing ever_married and stroke using a chi-squared test - results are
+significant
+
+|chisq.test(table(ever_married, stroke))|
+
+|## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  table(ever_married, stroke)
+## X-squared = 53.126, df = 1, p-value = 3.128e-13|
+
+Comparing work_type and stroke using a chi-squared test - results are
+significant
+
+|chisq.test(table(work_type, stroke))|
+
+|## Warning in chisq.test(table(work_type, stroke)): Chi-squared approximation may
+## be incorrect|
+
+|## 
+##  Pearson's Chi-squared test
+## 
+## data:  table(work_type, stroke)
+## X-squared = 41.954, df = 4, p-value = 1.706e-08|
+
+Comparing Residence_type and stroke using a chi-squared test - results
+are not significant
+
+|chisq.test(table(Residence_type, stroke))|
+
+|## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  table(Residence_type, stroke)
+## X-squared = 0.12382, df = 1, p-value = 0.7249|
+
+Comparing avg_glucose_level and stroke using a chi-squared test -
+results are significant
+
+|chisq.test(table(avg_glucose_level, stroke))|
+
+|## Warning in chisq.test(table(avg_glucose_level, stroke)): Chi-squared
+## approximation may be incorrect|
+
+|## 
+##  Pearson's Chi-squared test
+## 
+## data:  table(avg_glucose_level, stroke)
+## X-squared = 4052.4, df = 3851, p-value = 0.0118|
+
+Comparing smoking_status and stroke using a chi-squared test - results
+are significant
+
+|chisq.test(table(smoking_status, stroke))|
+
+|## 
+##  Pearson's Chi-squared test
+## 
+## data:  table(smoking_status, stroke)
+## X-squared = 34.943, df = 3, p-value = 1.252e-07|
+
+#Findings and Conclusions Based on the multiple significance tests
+comparing demographic variables to the stroke variable, the variables
+hypertension, heart_disease, ever_married, work_type, avg_glucose_level,
+and smoking status are statistically significant factors.
+
