@@ -40,36 +40,6 @@ if __name__ == '__main__':
 
 
 
-
-def stretch_model(fname_in, fname_out):#This function stretches the shape by 2 on the y axis
-    try:
-        with open(fname_in) as fp_in:
-            vertices = 0
-            lines = fp_in.read()
-            lines = lines.split('\n')
-        with open(fname_out, 'w') as fp_out:
-            for i in range(len(lines)):
-                if 'v' in lines[i]:
-                    close = lines[i].split(' ')
-                    close[2] = str(float(close[2])*2)
-                    line = " ".join(close)
-                    fp_out.write(line)
-                    vertices += 1
-                elif 'f' in lines[i]:
-                    fp_out.write(line)
-
-        return vertices
-        file.close()
-    except FileNotFoundError:
-        return -1
-
-if __name__ == '__main__':
-    print(stretch_model('missing.obj', 'doesntmatter.obj')) #-1
-    print(stretch_model('triforce.obj', 'triforce_stretched.obj')) #9
-    print(stretch_model('teapot.obj', 'tall_teapot.obj')) #3644
-
-
-
 def count_votes(district, office):
     winner = []
     votes = 0
@@ -96,4 +66,5 @@ if __name__ == '__main__':
 
     #print(count_votes('district_60b.csv', 'County Commissioner District 4'))
     #['Angela Conley', 49]
+
 
