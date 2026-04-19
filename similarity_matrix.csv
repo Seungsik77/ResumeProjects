@@ -1,0 +1,10 @@
+title,Machine learning,Deep learning,Natural language processing,Climate change,Renewable energy,Solar panel,Stock market,Inflation,Supply chain
+Machine learning,1.0,0.661,0.2487,0.255,0.2235,0.224,0.233,0.2434,0.2326
+Deep learning,0.661,1.0,0.2132,0.2241,0.2091,0.2334,0.2016,0.2101,0.2201
+Natural language processing,0.2487,0.2132,1.0,0.1024,0.0748,0.0857,0.0828,0.0989,0.0776
+Climate change,0.255,0.2241,0.1024,1.0,0.5756,0.3576,0.2836,0.3323,0.239
+Renewable energy,0.2235,0.2091,0.0748,0.5756,1.0,0.4606,0.2707,0.3182,0.2546
+Solar panel,0.224,0.2334,0.0857,0.3576,0.4606,1.0,0.249,0.2734,0.2611
+Stock market,0.233,0.2016,0.0828,0.2836,0.2707,0.249,1.0,0.4845,0.2553
+Inflation,0.2434,0.2101,0.0989,0.3323,0.3182,0.2734,0.4845,1.0,0.2885
+Supply chain,0.2326,0.2201,0.0776,0.239,0.2546,0.2611,0.2553,0.2885,1.0

@@ -1,0 +1,22 @@
+CLUSTER REPORT
+=======================================================
+
+CLUSTER 0
+  Keywords: can, off, said, certain, every, cost, financial, higher
+  • Gas prices won’t fall quickly. Here are ways to pay less at the pump right now
+  • Yahoo Finance
+
+CLUSTER 1
+  Keywords: beijing, china, chinese, wong, year, last year, plan, target
+  • Key takeaways from China’s new 5-year economic blueprint and growth target
+  • A humanoid robot sprints to victory in Beijing, beating the human half-marathon world record
+
+CLUSTER 2
+  Keywords: chief, trump, rules, congress, donald, see, both, american
+  • JONATHAN TURLEY: Chief Justice Roberts could learn from baseball great Ted Williams when it comes to leaks
+
+CLUSTER 3
+  Keywords: wednesday, wednesday april, april, inside, small, life, said, today
+  • Chernobyl’s radioactive landscape is testament to nature’s resilience and survival spirit
+  • An energy blockade on Cuba pulls the plug on Havana’s legendary nightlife
+
